@@ -1,5 +1,4 @@
 import gleam/list
-import gleam/set.{type Set}
 import gleam/string
 
 fn create_ordered_word_list(word: String) -> List(String) {
