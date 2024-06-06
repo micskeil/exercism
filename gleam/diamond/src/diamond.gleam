@@ -44,7 +44,7 @@ pub fn build(letter: String) -> String {
   let bottom_part =
     used_alphabet
     |> list.index_map(fn(l, i) { create_line("", i, l, line_length) })
-  let top_part = bottom_part |> list.drop(1) |> list.reverse()
+  let top_part = bottom_part |> list.drop(1)
 
   list.append(top_part, bottom_part) |> string.join("\n")
 }
