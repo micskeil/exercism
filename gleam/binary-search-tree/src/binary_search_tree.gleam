@@ -1,5 +1,4 @@
 import gleam/list
-import gleam/order.{Gt, Lt}
 
 pub type Tree {
   Node(data: Int, left: Tree, right: Tree)
@@ -29,13 +28,18 @@ pub fn to_tree(data: List(Int)) -> Tree {
   data |> list.fold(Nil, add_to_tree)
 }
 
+fn sort_tree(tree: Tree) -> List(Int) {
+  case tree {
+    Nil -> []
+    Node(data, left, right) -> {
+      list.flatten([sort_tree(left), [data], sort_tree(right)])
+    }
+  }
+}
+
 // I know this is cheating, so sorry
 pub fn sorted_data(data: List(Int)) -> List(Int) {
   data
-  |> list.sort(fn(a, b) {
-    case a <= b {
-      True -> Lt
-      False -> Gt
-    }
-  })
+  |> to_tree
+  |> sort_tree
 }
