@@ -7,20 +7,13 @@ pub type Tree {
 
 fn add_to_tree(tree: Tree, data: Int) -> Tree {
   case tree {
-    Node(tree_data, Nil, right) if data <= tree_data -> {
-      Node(tree_data, Node(data, Nil, Nil), right)
-    }
-    Node(tree_data, left, Nil) if data > tree_data -> {
-      Node(tree_data, left, Node(data, Nil, Nil))
-    }
-    Node(tree_data, left, right) if data <= tree_data -> {
-      Node(tree_data, add_to_tree(left, data), right)
-    }
-    Node(tree_data, left, right) if data > tree_data -> {
-      Node(tree_data, left, add_to_tree(right, data))
+    Node(tree_data, left, right) -> {
+      case data <= tree_data {
+        True -> Node(tree_data, add_to_tree(left, data), right)
+        False -> Node(tree_data, left, add_to_tree(right, data))
+      }
     }
     Nil -> Node(data, Nil, Nil)
-    _ -> panic as "Invalid tree"
   }
 }
 
